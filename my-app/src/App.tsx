@@ -1,26 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
+import axios from "axios";
+import { useEffect, useState } from "react";
 import './App.css';
 
 function App() {
+  const [dogName, setDogName] = useState("");
+  const [dogData, setDogData] = useState <undefined | any> (undefined);
+  const DOG_API_URL = "https://dog.ceo/api/breed";
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Dog Breeds Image Search</h1>
+      <footer>
+        <p>Kevin A. Gao (kgao826@aucklanduni.ac.nz)</p>
+      </footer>
     </div>
   );
+  function search() {
+    axios.get(DOG_API_URL + "/" + dogName + "/images/random").then((res) => {
+      setDogData(res.data.message);
+    });
+  }
 }
 
 export default App;
