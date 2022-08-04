@@ -9,9 +9,29 @@ import './App.css';
 
 function App() {
   const [dogName, setDogName] = useState("");
+  const [breedListJSON, setBreedList] = useState("");
+  const [currentDog, setCurrentDog] = useState("");
   const DOG_API_URL = "https://dog.ceo/api/breed";
   const DOG_API_BREED_LIST_URL = "https://dog.ceo/api/breeds/list/all";
   const [dogData, setDogData] = useState <undefined | any> (undefined);
+  useEffect(()=> {list_breed();}, [])
+
+  let breedListStr = JSON.stringify(breedListJSON);
+  let breedList = JSON.parse(breedListStr);
+  let breeds = new Array();
+  let subBreedList = [];
+  for (var breedName in breedList){
+    if (breedList[breedName].length > 0) {
+      for (var i = 0; i < breedList[breedName].length; i++){
+        subBreedList = breedList[breedName];
+        breeds.push({ value: breedName + "/" + subBreedList[i], label: breedName + " (" + subBreedList[i] + ")"});
+      }
+    }
+    else{
+      breeds.push({value: breedName, label: breedName});
+    }
+  }  
+
   return (
     <div>
       <div id="top-bar">
@@ -27,6 +47,7 @@ function App() {
               onChange={(e) => setDogName(e.target.value)}
             >
               <MenuItem value=""><i>None</i></MenuItem>
+              {breeds.map(({value, label}, index) => <MenuItem value={value} key={index}>{label.toUpperCase()}</MenuItem>)}
             </Select>
           </FormControl>
           <Button variant = "contained" onClick={() => {search();}}>Search</Button>
@@ -51,6 +72,12 @@ function App() {
     axios.get(DOG_API_URL + "/" + dogName + "/images/random").then((res) => {
       setDogData(res.data.message);
     });
+  }
+
+  function list_breed() {
+    fetch(DOG_API_BREED_LIST_URL)
+    .then((response) => response.json())
+    .then((data) => setBreedList(data.message));
   }
 }
 
