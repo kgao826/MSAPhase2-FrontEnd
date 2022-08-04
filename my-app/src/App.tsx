@@ -5,7 +5,8 @@ import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
-import './App.css';
+
+import "./App.css";
 
 function App() {
   const [dogName, setDogName] = useState("");
@@ -19,6 +20,7 @@ function App() {
   let breedListStr = JSON.stringify(breedListJSON);
   let breedList = JSON.parse(breedListStr);
   let breeds = new Array();
+
   let subBreedList = [];
   for (var breedName in breedList){
     if (breedList[breedName].length > 0) {
@@ -31,13 +33,13 @@ function App() {
       breeds.push({value: breedName, label: breedName});
     }
   }  
-
   return (
     <div>
       <div id="top-bar">
       <h1>Dog Breeds Image Search</h1>
       </div>
-      <div id="dropdown-list-components">
+      <div id="page-body">
+        <div id="dropdown-list-components">
           <FormControl variant="filled" sx={{minWidth: 500}}>
             <InputLabel id="breed-list">Dog Breeds</InputLabel>
             <Select
@@ -52,6 +54,9 @@ function App() {
           </FormControl>
           <Button variant = "contained" onClick={() => {search();}}>Search</Button>
         </div>
+        <div id="dogDesc">
+          <p>Current Image:&nbsp;{currentDog.toUpperCase().replace("/", " ")}</p>
+        </div>
         <div id="img-space">
           {dogData === undefined ? (
             <p>No breed selected</p>
@@ -62,15 +67,16 @@ function App() {
           )}
         </div>
         <p>This webpage allows you to browse random images of dog breeds</p>
+      </div>
       <footer>
         <p>Kevin A. Gao (kgao826@aucklanduni.ac.nz)</p>
       </footer>
     </div>
   );
-
   function search() {
     axios.get(DOG_API_URL + "/" + dogName + "/images/random").then((res) => {
       setDogData(res.data.message);
+      setCurrentDog(dogName);
     });
   }
 
