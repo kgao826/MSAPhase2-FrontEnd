@@ -66,9 +66,9 @@ function App() {
             </div>
           )}
         </div>
-        <p>This webpage allows you to browse random images of dog breeds</p>
       </div>
       <footer>
+        <p>This webpage allows you to browse random images of dog breeds</p>
         <p>Kevin A. Gao (kgao826@aucklanduni.ac.nz)</p>
       </footer>
     </div>
