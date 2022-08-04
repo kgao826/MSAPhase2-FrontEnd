@@ -56,7 +56,6 @@ function App() {
               label="Breeds"
               onChange={(e) => setDogName(e.target.value)}
             >
-              <MenuItem value=""><i>None</i></MenuItem>
               {/* Each value in the breeds array is mapped to the MenuItem by using the two values formatted to ensure the 'value' is in the format for the api and the 'label' is formatted so it is readable */}
               {breeds.map(({value, label}, index) => <MenuItem value={value} key={index}>{label.toUpperCase()}</MenuItem>)} 
             </Select>
