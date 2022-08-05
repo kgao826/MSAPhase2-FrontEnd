@@ -1,3 +1,4 @@
+//To run the webpage, cd my-app directory and then use npm start. Install npm if not installed.
 import axios from "axios";
 import { useEffect, useState } from "react";
 import FormControl from "@mui/material/FormControl"
